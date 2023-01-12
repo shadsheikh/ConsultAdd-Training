@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+      function name(str){
+         alert(str);
+      }
+      </script>  
+      <style>
+         .c1 {
+            background-color:blue;
+            width:400px;
+            height:400px;
+            position:relative;
+            border:1px solid black;
+            border-radius: 50%;
+         }
+         .c2 {
+            background-color:red;
+            top: 10%; left:10%;
+            width:80%;
+            height:80%; 
+            position: absolute;
+            border:1px solid black;
+            border-radius: 50%;
+         }
+         .c3 {
+            background-color:yellow;
+            top: 20%; left:20%; 
+            width:60%; 
+            height:60%;
+            position: absolute;
+            border:1px solid black;
+            border-radius: 50%;
+         }
+      </style>
+   <head>
+   <body>
+      <div onclick="name('C1')" class="c1">
+         <div onclick="name('C2')" class="c2">
+         </div>
+         <div onclick="name('C3')" class="c3">
+         </div>
+   </body>
+</html>
