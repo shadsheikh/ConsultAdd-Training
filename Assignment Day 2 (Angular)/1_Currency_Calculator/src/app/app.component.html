@@ -1,11 +1,8 @@
-<h1>{{title}}</h1>
-<input type="number" placeholder="Enter current currency" #CCurrency >
-<select name="currency" id="RCurrency" #RCurrency>
-  <option value="USD">USD</option>
-  <option value="EUR">EUR</option>
-  <option value="JPY">JPY</option>
-  <option value="GBP">GBP</option>
-  <option value="CHF">CHF</option>
-</select>
-<button (click)="CurrencyCoverter(CCurrency.valueAsNumber,RCurrency.value)">Convert</button>
-<h2>Converted Currency: {{result}} INR</h2>
+<button (click)="getApp1()">App1</button>
+<button (click)="getApp2()">App2</button>
+
+<app-curreny-converter *ngIf="app1"></app-curreny-converter>
+
+<h1 *ngIf="app2">API Call</h1>
+<button *ngIf="app2" (click)="getData()">Get Data</button>
+<app-api *ngIf="isData"></app-api>

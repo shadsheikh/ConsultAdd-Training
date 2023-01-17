@@ -1,0 +1,14 @@
+<table style= "border:1px solid black">
+  <tr style= "border:1px solid black">
+    <th style= "border:1px solid black">userId</th>
+    <th style= "border:1px solid black">id</th>
+    <th style= "border:1px solid black">title</th>
+    <th style= "border:1px solid black">body</th>
+  </tr>
+  <tr style= "border:1px solid black" *ngFor="let data of data">
+    <td style= "border:1px solid black">{{data.id}}</td>
+    <td style= "border:1px solid black">{{data.userId}}</td>
+    <td style= "border:1px solid black">{{data.title}}</td>
+    <td style= "border:1px solid black">{{data.body}}</td>
+  </tr>
+</table>
