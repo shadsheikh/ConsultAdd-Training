@@ -1,0 +1,9 @@
+<form [formGroup]="radioForm">
+  <tr>
+      <td>Sort By: </td>
+      <td>
+          <input type="radio" value="name" formControlName="sortby" (change)="sorting($event)">Name
+          <input type="radio" value="dob" formControlName="sortby" (change)="sorting($event)">Date of Birth
+      </td>
+  </tr>
+</form>

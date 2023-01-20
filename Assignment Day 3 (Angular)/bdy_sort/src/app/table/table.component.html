@@ -1,0 +1,12 @@
+<table style= "border:1px solid black">
+  <tr style= "border:1px solid black">
+    <th style= "border:1px solid black">id</th>
+    <th style= "border:1px solid black">name</th>
+    <th style= "border:1px solid black">bdy</th>
+  </tr>
+  <tr style= "border:1px solid black" *ngFor="let data of dataService.sharedTable">
+    <td style= "border:1px solid black">{{data.id}}</td>
+    <td style= "border:1px solid black">{{data.name}}</td>
+    <td style= "border:1px solid black">{{data.bdy}}</td>
+  </tr>
+</table>
