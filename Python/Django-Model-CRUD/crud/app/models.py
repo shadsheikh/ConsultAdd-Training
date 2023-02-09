@@ -12,7 +12,7 @@ class Employees(models.Model):
 class Manager(models.Manager):
     id = models.IntegerField()
     name = models.CharField(max_length=200)
-    manager = models.CharField(max_length=200)
+    manager = models.OneToOneField(Employees)
     
     def __str__(self):
         return self.name

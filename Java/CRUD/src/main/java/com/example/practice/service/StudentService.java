@@ -15,18 +15,17 @@ public class StudentService {
 
     //Create New student details
 
-    public String createStudent(Student student){
+    public Student createStudent(Student student){
         if(this.studentRepo.existsById(student.getId())){
-            return "Student already exists";
+            return null;
         }
         else{
             this.studentRepo.save(student);
-            return "Student details are saved.";
+            return student;
         }
     }
 
     //get all student details
-
     public List<Student> getStudents(){
         return this.studentRepo.findAll();
     }
@@ -42,7 +41,7 @@ public class StudentService {
             this.studentRepo.save(student);
             return student;
         }
-        return null;
+        return student;
     }
 
     //get student by id
