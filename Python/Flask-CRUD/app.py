@@ -1,17 +1,20 @@
 from flask import Flask, render_template, request,redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    
 class Todo(db.Model):
     sno=db.Column(db.Integer,primary_key=True)
     title=db.Column(db.String(200),nullable=False)
     desc=db.Column(db.String(500),nullable=False)
-    date_created=db.Column(db.DateTime,default=datetime.utcnow)
+    marks=db.Column(db.String(500),nullable=False)
 
     def __repr__(self)-> str:
         return f"{self.sno} - {self.title}"
@@ -21,7 +24,8 @@ def hello_world():
     if request.method=='POST':
         title = request.form['title']
         desc = request.form['desc']
-        todo=Todo(title=title,desc=desc)
+        marks = request.form['marks']
+        todo=Todo(title=title,desc=desc,marks=marks)
         db.session.add(todo)
         db.session.commit()
     allTodo = Todo.query.all()
@@ -32,9 +36,11 @@ def update(sno):
     if request.method=='POST':
         title = request.form['title']
         desc = request.form['desc']
+        marks = request.form['marks']
         todo = Todo.query.filter_by(sno=sno).first()
         todo.title=title
         todo.desc=desc
+        todo.marks=marks
         db.session.add(todo)
         db.session.commit()
         return redirect("/")
