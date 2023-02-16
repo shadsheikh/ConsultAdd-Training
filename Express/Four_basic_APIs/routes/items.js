@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-let data = [
-    { id: 1, title: 'Create a project', completed: true},
-    { id: 2, title: 'Take a cofféé', completed: true},
-    { id: 3, title: 'Write new article', completed: true},
-    { id: 4, title: 'Walk toward home',completed: false},
-    { id: 5, title: 'Have some dinner',completed: false},
-];
+'use strict';
+
+const fs = require('fs');
+let rawdata = fs.readFileSync('data.json');
+let data = JSON.parse(rawdata);
 
 
 // READ

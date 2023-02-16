@@ -1,0 +1,7 @@
+[
+    { "id": 1, "title": "Create a project", "completed": true},
+    { "id": 2, "title": "Take a coffee", "completed": true},
+    { "id": 3, "title": "Write new article", "completed": true},
+    { "id": 4, "title": "Walk toward home","completed": false},
+    { "id": 5, "title": "Have some dinne","completed": false}
+]
