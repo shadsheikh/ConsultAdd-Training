@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Shad Sheikh",
+        "email": "shad@gamil.com",
+        "pwd": "123",
+        "role": "intern"
+    },
+    {
+        "id": 123,
+        "name": "Mr. Shad Sheikh",
+        "email": "shad77@gamil.com",
+        "pwd": "1232",
+        "role": "engineer"
+    }
+]
