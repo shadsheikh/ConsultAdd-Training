@@ -15,13 +15,13 @@ const getAccountData = () => {
 }
 
 // READ
-router.get('/items', function (req, res) {
+router.get('/getUser', function (req, res) {
     const accounts = getAccountData()
     res.send(accounts)
 });
 
 //READ By ID
-router.get('/items/:id', function (req, res) {
+router.get('/getUserById/:id', function (req, res) {
     var existAccounts = getAccountData()
     let found = existAccounts.find(function (item) {
         return item.id === parseInt(req.params.id);
@@ -35,7 +35,7 @@ router.get('/items/:id', function (req, res) {
  });
 
 // CREATE
-router.post('/items', function (req, res) {
+router.post('/addUser', function (req, res) {
     var data = getAccountData()
     let newItem = {
         id: req.body.id,
@@ -50,7 +50,7 @@ router.post('/items', function (req, res) {
 });
 
 // UPDATE
-router.put('/items/:id', function (req, res) {
+router.put('/updateUser/:id', function (req, res) {
     var existAccounts = getAccountData()
     let found = existAccounts.find(function (item) {
         return item.id === parseInt(req.params.id);
@@ -76,7 +76,7 @@ router.put('/items/:id', function (req, res) {
 });
 
 // DELETE
-router.delete('/items/:id', function (req, res) {
+router.delete('/deleteUser/:id', function (req, res) {
     var existAccounts = getAccountData()
     let found = existAccounts.find(function (item) {
         return item.id === parseInt(req.params.id);
