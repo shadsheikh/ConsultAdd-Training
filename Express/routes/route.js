@@ -1,8 +1,34 @@
 const express = require("express")
 const userModel = require("../models/models")
 const router = express.Router();
+const {checkSchema} = require('express-validator')
 
-const createSchema = {
+
+// READ
+router.get('/getUser', async (req, res) => {
+    const users = await userModel.find({});
+    try {
+        res.send(users);
+    }catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+//READ By ID
+router.get('/getUserById/:id', async (req, res) => {
+    const users = await userModel.find({});
+    let found = users.find(function (item) {
+        return item.id === parseInt(req.params.id);
+    });
+    if(found){
+        res.send(found)
+    }
+    else{
+        res.sendStatus(404);
+    }
+ });
+
+ const createSchema = {
     id: {
         notEmpty: true,
         errorMessage: "ID cannot be empty"
@@ -49,30 +75,6 @@ const createSchema = {
     }
 }
 
-// READ
-router.get('/getUser', async (req, res) => {
-    const users = await userModel.find({});
-    try {
-        res.send(users);
-    }catch (error) {
-        res.status(500).send(error);
-    }
-});
-
-//READ By ID
-router.get('/getUserById/:id', async (req, res) => {
-    const users = await userModel.find({});
-    let found = users.find(function (item) {
-        return item.id === parseInt(req.params.id);
-    });
-    if(found){
-        res.send(found)
-    }
-    else{
-        res.sendStatus(404);
-    }
- });
-
 // CREATE
 router.post('/addUser', checkSchema(createSchema), async (req, res) => {
     const user = new userModel(req.body);
@@ -108,11 +110,7 @@ router.put('/updateUser/:id', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-// DELETE
-=======
-DELETE
->>>>>>> form_validation
+//DELETE
 router.delete('/deleteUser/:id', async (req, res) => {
     const users = new userModel(req.body);
     let found = users.find(function (item) {
