@@ -1,7 +1,12 @@
 const express = require("express");
-const userModel = require("../models/models");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
+
+const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
+
+const jwtSecret = require("../helpers/jwtSecret");
+const passport = require("../helpers/passport");
+const userModel = require("../models/models");
 
 const createSchema = {
 	id: {
@@ -146,7 +151,7 @@ router.post("/register", async (req, res, next) => {
 				email,
 				role: user.role,
 			},
-			process.env.USER_JWT_SECRET,
+			jwtSecret,
 			{ expiresIn: "1 day" },
 		);
 		return res.status(201).send({
@@ -182,7 +187,7 @@ router.post("/login", async (req, res, next) => {
 					email,
 					role: user.role,
 				},
-				process.env.USER_JWT_SECRET,
+				jwtSecret,
 				{ expiresIn: "1 day" },
 			);
 			return res.status(201).send({
@@ -199,5 +204,17 @@ router.post("/login", async (req, res, next) => {
 		res.sendStatus(404);
 	}
 });
+
+// PROTECTED ROUTE
+router.get(
+	"/protected",
+	passport.authenticate("jwt", { session: false }),
+	(req, res) => {
+		const token = req.headers.authorization.split(" ")[1];
+		const tokenData = jwt_decode(token);
+		// Send token data as response
+		res.json(tokenData);
+	},
+);
 
 module.exports = router;
