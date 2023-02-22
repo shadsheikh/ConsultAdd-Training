@@ -3,6 +3,7 @@ const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
+const { checkSchema } = require("express-validator");
 
 const jwtSecret = require("../helpers/jwtSecret");
 const passport = require("../helpers/passport");
@@ -80,7 +81,7 @@ router.get("/getUserById/:id", async (req, res) => {
 });
 
 // CREATE
-router.post("/addUser", async (req, res) => {
+router.post("/addUser", checkSchema(createSchema), async (req, res) => {
 	const user = new userModel(req.body);
 	try {
 		await user.save();
@@ -137,6 +138,13 @@ router.post("/register", async (req, res, next) => {
 		// Check if fields are empty
 		if (!id || !name || !email || !pwd || !role)
 			return res.status(400).send({ message: "Fields cannot be empty." });
+
+		// Check if user already exists
+		const isUser = await userModel.findOne({ email });
+		if (isUser)
+			return res
+				.status(400)
+				.send({ message: "Account with email already exists!" });
 
 		// Create user
 		const user = new userModel({ id, name, email, pwd, role });
