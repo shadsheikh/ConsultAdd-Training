@@ -1,11 +1,9 @@
 const express = require("express");
 const routes = require("./routes/route");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 
 const app = express();
 
-dotenv.config();
 app.use(express.json());
 mongoose.set("strictQuery", false);
 
