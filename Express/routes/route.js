@@ -1,29 +1,21 @@
 const express = require("express")
+const userModel = require("../models/models")
 const router = express.Router();
 
-const fs = require('fs');
-const dataPath = './data/data.json'
-
-const saveAccountData = (data) => {
-    const stringifyData = JSON.stringify(data)
-    fs.writeFileSync(dataPath, stringifyData)
-}
-
-const getAccountData = () => {
-    const jsonData = fs.readFileSync(dataPath)
-    return JSON.parse(jsonData) 
-}
-
 // READ
-router.get('/getUser', function (req, res) {
-    const accounts = getAccountData()
-    res.send(accounts)
+router.get('/getUser', async (req, res) => {
+    const users = await userModel.find({});
+    try {
+        res.send(users);
+    }catch (error) {
+        res.status(500).send(error);
+    }
 });
 
 //READ By ID
-router.get('/getUserById/:id', function (req, res) {
-    var existAccounts = getAccountData()
-    let found = existAccounts.find(function (item) {
+router.get('/getUserById/:id', async (req, res) => {
+    const users = await userModel.find({});
+    let found = users.find(function (item) {
         return item.id === parseInt(req.params.id);
     });
     if(found){
@@ -35,59 +27,51 @@ router.get('/getUserById/:id', function (req, res) {
  });
 
 // CREATE
-router.post('/addUser', function (req, res) {
-    var data = getAccountData()
-    let newItem = {
-        id: req.body.id,
-        name: req.body.name,
-        email: req.body.email,
-        pwd: req.body.pwd,
-        role: req.body.role, 
-    };
-    data.push(newItem)
-    saveAccountData(data);
-    res.send({success: true, msg: 'Item added successfully'})
+router.post('/addUser', async (req, res) => {
+    const user = new userModel(req.body);
+    try {
+      await user.save();
+        res.send(user);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
 // UPDATE
-router.put('/updateUser/:id', function (req, res) {
-    var existAccounts = getAccountData()
-    let found = existAccounts.find(function (item) {
-        return item.id === parseInt(req.params.id);
-    });
-    if(found){
-    fs.readFile(dataPath, 'utf8', (err, data) => {
-        let updated = {
-            id: req.body.id,
-            name: req.body.name,
-            email: req.body.email,
-            pwd: req.body.pwd,
-            role: req.body.role, 
-        };
-        let targetIndex = existAccounts.indexOf(found);
-        existAccounts.splice(targetIndex,1,updated);
-        saveAccountData(existAccounts);
-        res.send(`accounts with id ${found.id} has been updated`)
-    }, true);
-    }
-    else{
+router.put('/updateUser/:id', async (req, res) => {
+    const users = await userModel.find({});
+        let found = users.find(function (item) {
+            return item.id === parseInt(req.params.id);
+        });
+        if(found){
+            let updated = {
+                id: req.body.id,
+                name: req.body.name,
+                email: req.body.email,
+                pwd: req.body.pwd,
+                role: req.body.role, 
+            };
+            let targetIndex = users.indexOf(found);
+            users.splice(targetIndex,1,updated);
+            const newuser = new userModel((users));
+            newuser.save();
+            res.send(`accounts with id ${found.id} has been updated`)
+    }else{
         res.sendStatus(404);
     }
 });
 
 // DELETE
-router.delete('/deleteUser/:id', function (req, res) {
-    var existAccounts = getAccountData()
-    let found = existAccounts.find(function (item) {
+router.delete('/deleteUser/:id', async (req, res) => {
+    const users = new userModel(req.body);
+    let found = users.find(function (item) {
         return item.id === parseInt(req.params.id);
     });
     if (found) {
-        fs.readFile(dataPath, 'utf8', (err, data) => {
-            let targetIndex = existAccounts.indexOf(found);
-            existAccounts.splice(targetIndex, 1);
-            saveAccountData(existAccounts);
+            let targetIndex = users.indexOf(found);
+            users.splice(targetIndex,1);
+        users.save(function(){});
             res.send(`accounts with id ${found.id} has been deleted`)
-          }, true);
     }
     else{
         res.sendStatus(404);
