@@ -48,7 +48,6 @@ app.get('/checkAuth', requireAuth, userAuth.checkAuth);
 app.post('/createNewProject', requireAuth, operations.createNewProject);
 
 
-
 app.listen(3000, () => {
     console.log("listeniing at port:3000")
 })
