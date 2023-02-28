@@ -19,6 +19,13 @@ async function createNewProject(req, res) {
             leadRole: leadRole,
             projectLeadEmail: projectLeadEmail,
         });
+        console.log({
+            id: projectId,
+            name: projectName,
+            projectLead: projectLead,
+            leadRole: leadRole,
+            projectLeadEmail: projectLeadEmail,
+        });
         res.status(201).json({ message: "Project created successfully!" });
     }
     catch (error) {

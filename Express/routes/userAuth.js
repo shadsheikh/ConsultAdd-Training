@@ -37,7 +37,7 @@ async function signup(req, res) {
             return res.status(400).json({ message: "Please enter a valid email address!" });
         }
         else {
-            //create a new user
+
             const hashedPassword = await bcrypt.hash(password, 8);
             await User.create({
                 id: id,
@@ -48,15 +48,6 @@ async function signup(req, res) {
             });
             res.status(201).json({ message: "User created successfully!" });
         }
-        // await User.create({
-        //     id:id,
-        //     name:name,
-        //     email:email,
-        //     pwd: hashedPassword,
-        //     role:role
-        // });
-
-        // res.sendStatus(200);
     }
     catch (error) {
         console.log(error);
@@ -67,8 +58,7 @@ async function signup(req, res) {
 async function login(req, res) {
     const email = req.body.email;
     const password = req.body.password;
-    // console.log(email);
-    // console.log(password);
+
 
     const user = await User.findOne({ email });
     if (!user) {

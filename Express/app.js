@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
-
 const express = require("express")
 const routes = require('./routes/route')
 const mongoose = require("mongoose");
@@ -25,9 +24,7 @@ const username = "Shads";
 const cluster = "cluster0.1kwfpq4";
 const dbname = "Database";
 
-var query =
-    // `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`
-    'mongodb+srv://shads:shads123@cluster0.1kwfpq4.mongodb.net/?retryWrites=true&w=majority'
+var query = 'mongodb+srv://shads:shads123@cluster0.1kwfpq4.mongodb.net/?retryWrites=true&w=majority'
 const db = (query);
 mongoose.Promise = global.Promise;
 mongoose.connect(db, {
