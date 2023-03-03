@@ -1,5 +1,5 @@
 const express = require("express")
-const routes = require('./routes/route')
+const userRouter = require('./routes/userRoutes')
 const mongoose = require("mongoose");
 
 const app = express()
@@ -7,15 +7,9 @@ const app = express()
 app.use(express.json());
 mongoose.set("strictQuery", false);
 
-const password = "shads123";
-const username = "Shads";
-const cluster = "cluster0.1kwfpq4";
-const dbname = "Database";
-
-var query =
-   // `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`
-    'mongodb+srv://shads:shads123@cluster0.1kwfpq4.mongodb.net/?retryWrites=true&w=majority'
+var query = 'mongodb+srv://shads:shads123@cluster0.1kwfpq4.mongodb.net/?retryWrites=true&w=majority'
 const db = (query);
+
 mongoose.Promise = global.Promise;
 mongoose.connect(db, {
     useNewUrlParser: true,
@@ -26,8 +20,6 @@ mongoose.connect(db, {
     }
 });
 
-app.use('/', routes)
+app.use('/users', userRouter)
 
-app.listen(3000, ()=>{
-    console.log("listeniing at port:3000")
-})
+module.exports = app

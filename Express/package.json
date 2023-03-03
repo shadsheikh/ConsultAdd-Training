@@ -2,14 +2,15 @@
   "name": "crud-express",
   "version": "1.0.0",
   "description": "CRUD in express and node",
-  "main": "nodemon app.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "mongodb": "^5.0.1",
